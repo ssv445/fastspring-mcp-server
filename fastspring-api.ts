@@ -8,7 +8,7 @@ export function initAuth(username: string, password: string): void {
 
 // Validate ID parameters to prevent path traversal
 function validateId(id: string, label: string): void {
-  if (!/^[\w.:-]+$/.test(id)) {
+  if (!/^[\w-]+$/.test(id)) {
     throw new Error(`Invalid ${label}: must be alphanumeric (got "${id}")`);
   }
 }
@@ -36,7 +36,7 @@ async function request(path: string, params?: Record<string, string>): Promise<u
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`FastSpring API ${res.status}: ${body}`);
+    throw new Error(`FastSpring API error (${res.status})`);
   }
 
   return res.json();
@@ -74,6 +74,7 @@ export async function listSubscriptionEntries(subscriptionId: string): Promise<u
 
 export async function searchAccounts(email: string): Promise<unknown> {
   if (!email.trim()) throw new Error("email is required for account search");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) throw new Error("invalid email format");
   return request("/accounts", { email });
 }
 

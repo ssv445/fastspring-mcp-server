@@ -62,7 +62,7 @@ server.tool(
     status: z.enum(["active", "canceled", "deactivated", "overdue", "trial"]).optional().describe("Subscription status filter"),
     begin: z.string().optional().describe("Start date (YYYY-MM-DD)"),
     end: z.string().optional().describe("End date (YYYY-MM-DD)"),
-    limit: z.number().optional().default(25).describe("Max results (default 25)"),
+    limit: z.number().min(1).max(100).optional().default(25).describe("Max results (default 25, max 100)"),
   },
   async (filters) => {
     try {
@@ -116,7 +116,7 @@ server.tool(
   "list_events",
   "List FastSpring webhook events. Use for webhook gap analysis — comparing what FastSpring sent vs what Symfony processed. Note: 'processed' means delivered to your endpoint, NOT successfully handled by your code.",
   {
-    days: z.number().optional().default(7).describe("Number of days to look back (max 30, default 7)"),
+    days: z.number().min(1).max(30).optional().default(7).describe("Number of days to look back (max 30, default 7)"),
     type: z.string().optional().describe("Event type filter, e.g. 'subscription.deactivated', 'subscription.activated'"),
   },
   async (filters) => {
