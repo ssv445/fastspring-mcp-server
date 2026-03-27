@@ -1,11 +1,27 @@
 {
   "name": "fastspring-mcp",
   "version": "1.0.0",
-  "private": true,
+  "description": "MCP server for the FastSpring API — manage subscriptions, accounts, and webhook events from Claude",
   "type": "module",
+  "bin": {
+    "fastspring-mcp": "index.ts"
+  },
+  "files": [
+    "index.ts",
+    "fastspring-api.ts"
+  ],
   "scripts": {
     "start": "node --experimental-strip-types index.ts",
     "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["mcp", "fastspring", "claude", "mcp-server"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssv445/fastspring-mcp-server.git"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
